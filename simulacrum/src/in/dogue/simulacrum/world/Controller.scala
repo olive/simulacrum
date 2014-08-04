@@ -1,7 +1,6 @@
 package in.dogue.simulacrum.world
 
 import in.dogue.simulacrum.input.Controls
-import scala.annotation.tailrec
 import scala.util.Random
 import in.dogue.simulacrum.audio.SoundManager
 
@@ -12,7 +11,8 @@ object Controller {
     override val rows = rows_
     override def move: (Int, Int) = (0,0)
 
-    override def swapping: Boolean = false
+    override def adding: Boolean = false
+    override def subbing: Boolean = false
 
     override def update: Controller = self
 
@@ -29,7 +29,8 @@ object Controller {
     override val rows = rows_
     override def move: (Int, Int) = script.getMove(i)
 
-    override def swapping: Boolean = script.isSwapping(i)
+    override def adding: Boolean = script.isAdding(i)
+    override def subbing: Boolean = script.isSubbing(i)
 
     override def update: Controller = {
       cpu(cols_, rows_, i+1, script)
@@ -47,7 +48,8 @@ object Controller {
       (dx, dy)
     }
 
-    override def swapping: Boolean = Controls.Space.justPressed
+    override def adding: Boolean = Controls.Space.justPressed
+    override def subbing : Boolean = Controls.Minus.justPressed
 
     override def update: Controller = this
 
@@ -60,7 +62,8 @@ trait Controller {
   val rows:Int
   protected def move:(Int,Int)
   protected def flipping:Boolean
-  protected def swapping:Boolean
+  protected def adding:Boolean
+  protected def subbing:Boolean
   def getMove = {
     val m = move
     if (m != ((0,0))) {
@@ -69,10 +72,18 @@ trait Controller {
     m
   }
 
-  def isSwapping = {
-    val result = swapping
+  def isAdding = {
+    val result = adding
     if (result) {
       SoundManager.beeple.play()
+    }
+    result
+  }
+
+  def isSubbing = {
+    val result = subbing
+    if (result) {
+      SoundManager.werp.play()
     }
     result
   }

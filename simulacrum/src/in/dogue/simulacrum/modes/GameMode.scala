@@ -29,11 +29,11 @@ object GameMode {
     val left = Board.create(bCols, bRows, Controller.player(bCols, bRows))
     val right = Board.create(bCols, bRows, Controller.makeRandom(bCols, bRows, 60, 25, r))
     val wst = new WorldStateTransitioner(60)
-    GameMode(cols, rows, rect, left, right, border, div, CheckBoards, wst)
+    GameMode(cols, rows, delay, rect, left, right, border, div, CheckBoards, wst, r)
   }
 }
 
-case class GameMode private (cols:Int, rows:Int, rect:Rect, left:Board, right:Board, border:Border, div:TileGroup, state:WorldState, wst:WorldStateTransitioner) {
+case class GameMode private (cols:Int, rows:Int, delay:Int, rect:Rect, left:Board, right:Board, border:Border, div:TileGroup, state:WorldState, wst:WorldStateTransitioner, r:Random) {
   def update = {
     val (failed, newSelf) = state match {
       case CPUTurn(_) =>
@@ -45,7 +45,7 @@ case class GameMode private (cols:Int, rows:Int, rect:Rect, left:Board, right:Bo
     }
     if (failed) {
       SoundManager.lose.play()
-      FailMode.create(this).toMode
+      FailMode.create(cols, rows, this, r).toMode
     } else {
       val newState = wst.process(state)
       newSelf.copy(state=newState, wst=wst.update).toMode

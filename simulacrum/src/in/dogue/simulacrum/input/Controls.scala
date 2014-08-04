@@ -12,7 +12,9 @@ object Controls {
   val Up = makePr(Input.Keys.UP, JoypadButton("DPadUp"))
   val Down = makePr(Input.Keys.DOWN, JoypadButton("DPadDown"))
   val Space = makePr(Input.Keys.SPACE, JoypadButton("2"))
-  val Shift = makePr(Input.Keys.SHIFT_LEFT, JoypadButton("4"))
+  val Minus = makePr(Input.Keys.C, JoypadButton("3"))
+  val Back = makePr(Input.Keys.BACKSPACE, JoypadButton("10"))
+  val Shift = makePr(Input.Keys.SHIFT_LEFT, JoypadButton("6"))
   val Debug = makeKb(Input.Keys.TAB)
   val Escape = makeKb(Input.Keys.ESCAPE)
 

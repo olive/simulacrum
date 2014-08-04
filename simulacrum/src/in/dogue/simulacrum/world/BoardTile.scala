@@ -12,9 +12,11 @@ object BoardTile {
 }
 
 case class BoardTile(i:Int, bg:Color, fg:Color) {
-  def incr = copy(i=math.min(i+1, 5))
+  import BoardTile._
+  def incr = copy(i=(i + 1) % symbols.length)
+  def decr = copy(i=(i - 1 + symbols.length) % symbols.length)
   def draw(ij:Cell)(tr:TileRenderer):TileRenderer = {
-    tr <+ (ij, BoardTile.symbols(i).mkTile(bg, fg))
+    tr <+ (ij, symbols(i).mkTile(bg, fg))
   }
 
   override def equals(other:Any):Boolean = {

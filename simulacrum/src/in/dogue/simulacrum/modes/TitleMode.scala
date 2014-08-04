@@ -25,7 +25,7 @@ object TitleMode {
     val texts = Vector(
       tf.create("Do as you see.").toTileGroup |++| ((-1, 0)),
       tf.create("move:  ↑ ↓ → ←").toTileGroup |++| ((0,2)),
-      tf.create("swap:   SPACE").toTileGroup |++| ((0,3)),
+      tf.create("add:   SPACE").toTileGroup |++| ((0,3)),
       tf.create("flip: LEFT_SHIFT").toTileGroup |++| ((0,4))
     ).flatten.sfilter{ case c => c.code != CP437.` `.toCode }
     val slider = Slider.createInt("Delay:", 1, 10)

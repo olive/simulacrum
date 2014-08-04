@@ -10,6 +10,7 @@ object SoundManager {
   val oof = load("oof", 1.0)
   val flip = load("flip", 1.0)
   val beeple = load("beeple", 1.0)
+  val werp = load("werp", 1.0)
   val swishin = load("swishin", 1.0)
   val swishout = load("swishout", 0.5)
   val lose = load("lose", 1.0)

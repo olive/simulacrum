@@ -25,12 +25,17 @@ case class Board(tiles:Array2d[BoardTile], cursor:Cursor, controller:Controller)
     val move = controller.getMove
     val flip = controller.isFlipping
     val newCursor = cursor.move(move).flip(flip)
-    val nt = if (controller.isSwapping) {
+    val nt = if (controller.isAdding) {
       val curTiles = cursor.getTiles
       curTiles.foldLeft(tiles) { case (ts, c) =>
         ts.update(c, _.incr)
       }
 
+    } else if (controller.isSubbing) {
+      val curTiles = cursor.getTiles
+      curTiles.foldLeft(tiles) { case (ts, c) =>
+        ts.update(c, _.decr)
+      }
     } else {
       tiles
     }
