@@ -7,15 +7,15 @@ import com.deweyvm.gleany.graphics.Color
 import in.dogue.antiqua.Antiqua
 import Antiqua._
 import in.dogue.simulacrum.audio.SoundManager
+import in.dogue.simulacrum.Simulacrum
 
 object Counter {
   def create = {
     val width = 7
     def gf(s:String) = {
-      val group = Tile.groupFromFile(s, "tiles", CP437.intToCode, _.mkTile(Color.Black, Color.White))
-      val span = group.getSpan
-      group |++| (((width - span.width)/2, 0))
-
+      val tg = Simulacrum.gf(s)
+      val span = tg.getSpan
+      tg |++| (((width - span.width)/2, 0))
     }
     val `3` = gf("3")
     val `2` = gf("2")

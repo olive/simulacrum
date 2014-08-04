@@ -9,6 +9,7 @@ import Antiqua._
 import scala.util.Random
 import in.dogue.simulacrum.Simulacrum
 import in.dogue.simulacrum.input.Controls
+import in.dogue.simulacrum.ui.Slider
 
 object TitleMode {
   def create(cols:Int, rows:Int, r:Random) = {
@@ -22,26 +23,43 @@ object TitleMode {
     val tg = Tile.groupFromFile("title", "tiles", CP437.intToCode, c => c.mkTile(Color.Black, Color.White))
     import Simulacrum._
     val texts = Vector(
-      tf.create("move: ↑↓→←").toTileGroup |++| ((0,0)),
-      tf.create("swap: SPACE").toTileGroup |++| ((0,1)),
-      tf.create("flip: LEFT_SHIFT").toTileGroup |++| ((0,2)),
-      tf.create("Do as you see.").toTileGroup |++| ((0, 4))
-    ).flatten
-    TitleMode(cols, rows, rect, tg |++| ((1,2)), texts |++| ((9, 8)), r)
+      tf.create("Do as you see.").toTileGroup |++| ((-1, 0)),
+      tf.create("move:  ↑ ↓ → ←").toTileGroup |++| ((0,2)),
+      tf.create("swap:   SPACE").toTileGroup |++| ((0,3)),
+      tf.create("flip: LEFT_SHIFT").toTileGroup |++| ((0,4))
+    ).flatten.sfilter{ case c => c.code != CP437.` `.toCode }
+    val slider = Slider.createInt("Delay:", 1, 10)
+    val fliptg = flip(tg)
+    TitleMode(cols, rows, rect, tg |++| ((1,2)), fliptg |++| ((1, 9)), texts |++| ((10, 7)), slider, r)
+  }
+
+  private def flip(tg:TileGroup) = {
+    val span = tg.getSpan
+    tg.map { case ((i, j), t) =>
+      val newCode = if (t.code == CP437.▄.toCode) {
+        CP437.▀.toCode
+      } else if (t.code == CP437.▀.toCode) {
+        CP437.▄.toCode
+      } else {
+        t.code
+      }
+      ((i, (span.height - j)), t.setFg(Color.Black).setCode(newCode))
+
+    }
   }
 }
 
-case class TitleMode private (cols:Int, rows:Int, rect:Rect, tg:TileGroup, text:TileGroup, r:Random) {
+case class TitleMode private (cols:Int, rows:Int, rect:Rect, tg:TileGroup, rtg:TileGroup, text:TileGroup, slider:Slider[Int], r:Random) {
   def update:Mode = {
     if (Controls.Space.justPressed) {
-      val cd = CountMode.create(GameMode.create(cols, rows, r).toMode)
+      val cd = CountMode.create(GameMode.create(cols, rows, slider.getValue, r).toMode)
       Transition.create(cols, rows, this.toMode, cd.toMode, r).toMode
     } else {
-      this.toMode
+      copy(slider=slider.update).toMode
     }
   }
   def draw(tr:TileRenderer):TileRenderer = {
-    tr <+< rect.draw((0,0)) <|| tg <|| text
+    tr <+< rect.draw((0,0)) <+< slider.draw((16, 13)) <|| tg <|| rtg <|| text
   }
 
   def toMode:Mode = Mode[TitleMode](_.update, _.draw, this)

@@ -18,6 +18,9 @@ case class Board(tiles:Array2d[BoardTile], cursor:Cursor, controller:Controller)
   def cols = tiles.cols
   def rows = tiles.rows
   def get(ij:Cell) = tiles.get(ij)
+
+  def map(f:BoardTile => BoardTile) = copy(tiles=tiles.map{ case (_, t) => f(t)})
+
   def update:Board = {
     val move = controller.getMove
     val flip = controller.isFlipping

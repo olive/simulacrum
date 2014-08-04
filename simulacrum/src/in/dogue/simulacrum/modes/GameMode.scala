@@ -8,9 +8,10 @@ import in.dogue.antiqua.data.CP437
 import in.dogue.antiqua.Antiqua
 import Antiqua._
 import in.dogue.simulacrum.Simulacrum
+import in.dogue.simulacrum.audio.SoundManager
 
 object GameMode {
-  def create(cols:Int, rows:Int, r:Random) = {
+  def create(cols:Int, rows:Int, delay:Int, r:Random) = {
     def mkTile(r:Random) = {
       val fg = Color.Blue.dim(3 + r.nextDouble)
       val bg = Color.Blue.dim(6 + r.nextDouble)
@@ -34,30 +35,29 @@ object GameMode {
 
 case class GameMode private (cols:Int, rows:Int, rect:Rect, left:Board, right:Board, border:Border, div:TileGroup, state:WorldState, wst:WorldStateTransitioner) {
   def update = {
-    val newSelf = state match {
+    val (failed, newSelf) = state match {
       case CPUTurn(_) =>
-        copy(right=right.update)
+        false @@ copy(right=right.update)
       case PlayerTurn(_) =>
-        copy(left=left.update)
+        false @@ copy(left=left.update)
       case CheckBoards =>
-        checkBoards
+        checkBoards @@ this
     }
-    val newState = wst.process(state)
-    newSelf.copy(state=newState, wst=wst.update).toMode
+    if (failed) {
+      SoundManager.lose.play()
+      FailMode.create(this).toMode
+    } else {
+      val newState = wst.process(state)
+      newSelf.copy(state=newState, wst=wst.update).toMode
+    }
   }
 
 
-  private def checkBoards:GameMode = {
+  private def checkBoards:Boolean = {
     val test = for (i <- 0 until left.cols; j <- 0 until left.rows) yield {
       left.get((i, j)) == right.get((i, j))
-
     }
-    if (test.forall(id[Boolean])) {
-      this
-    } else {
-      this
-    }
-
+    !test.forall(id[Boolean])
   }
 
   def drawBorder(ij:Cell)(tr:TileRenderer):TileRenderer = {

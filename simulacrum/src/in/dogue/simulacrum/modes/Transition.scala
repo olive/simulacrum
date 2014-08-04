@@ -4,6 +4,7 @@ import in.dogue.antiqua.graphics.TileRenderer
 import scala.util.Random
 import in.dogue.antiqua.Antiqua
 import Antiqua._
+import in.dogue.simulacrum.audio.SoundManager
 
 object Transition {
   def create(cols:Int, rows:Int, from:Mode, to:Mode, r:Random) = {
@@ -17,6 +18,11 @@ object Transition {
 
 case class Transition(cols:Int, rows:Int, from:Mode, to:Mode, t:Int, max:Int, left:Curtain, right:Curtain, cover:DimCover) {
   def update = {
+    if (t == 0) {
+      SoundManager.swishin.play()
+    } else if (t == max/2) {
+      SoundManager.swishout.play()
+    }
     if (t >= max) {
       to
     } else {
@@ -38,7 +44,6 @@ case class Transition(cols:Int, rows:Int, from:Mode, to:Mode, t:Int, max:Int, le
       val tt = t - max/2
       (cols/2 + tt/2) @@ 0
     }
-    println(t + " " + leftPos)
     val toDraw = if (t <= max/2) {
       from
     } else {
