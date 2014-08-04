@@ -18,7 +18,7 @@ object Main {
     val settings = new Settings(SimulacrumControls, new SettingDefaults() {
       val SfxVolume: Float = 0.2f
       val MusicVolume: Float = 0.2f
-      val WindowSize: Point2i = Point2i(16*65,32*16)
+      val WindowSize: Point2i = Point2i(16*33*2,16*16*2)
       val DisplayMode: Int = 0
     }, false)
     val config = new GleanyConfig(settings, "Simulacrum", iconPaths)

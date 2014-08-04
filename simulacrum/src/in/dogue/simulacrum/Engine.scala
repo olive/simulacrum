@@ -8,8 +8,8 @@ import in.dogue.simulacrum.modes.{TitleMode, Mode}
 import scala.util.Random
 
 class Engine {
-  val cols = 65
-  val rows = 32
+  val cols = 33
+  val rows = 16
   val r = new Random(0)
   var mode:Mode = TitleMode.create(cols, rows, r).toMode
   val ts = new Tileset(16, 16, 16, 16, AssetLoader.loadTexture("16x16"))
