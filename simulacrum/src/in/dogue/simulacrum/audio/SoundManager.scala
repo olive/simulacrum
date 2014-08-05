@@ -14,9 +14,20 @@ object SoundManager {
   val swishin = load("swishin", 1.0)
   val swishout = load("swishout", 0.5)
   val lose = load("lose", 1.0)
+  val blip = load("blip", 1.0)
+  val victory = load("victory2", 4.0)
+
+
+  val thing = loadm("thing", 4.0)
   def load(s:String, adj:Double) = {
     val sound = AssetLoader.loadSound(s)
     sound.setAdjustVolume(adj.toFloat)
     sound
+  }
+
+  def loadm(s:String, adj:Double) = {
+    val music = AssetLoader.loadMusic(s)
+    music.setAdjustVolume(adj.toFloat)
+    music
   }
 }

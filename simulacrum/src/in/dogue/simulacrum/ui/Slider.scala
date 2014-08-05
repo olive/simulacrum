@@ -8,6 +8,7 @@ import in.dogue.antiqua.data.CP437
 import com.deweyvm.gleany.graphics.Color
 import in.dogue.simulacrum.Simulacrum
 import in.dogue.simulacrum.input.Controls
+import in.dogue.simulacrum.audio.SoundManager
 
 object Slider {
   def createInt(s:String, min:Int, max:Int) = {
@@ -27,8 +28,12 @@ case class Slider[T](title:TileGroup, lArrow:Tile, rArrow:Tile, render:T => Tile
   def update = {
     val dx = Controls.AxisX.zip(15, 5)
     val slid = dx match {
-      case 1 if value != max => copy(value = incr(value))
-      case -1 if value != min => copy(value = decr(value))
+      case 1 if value != max =>
+        SoundManager.blip.play()
+        copy(value = incr(value))
+      case -1 if value != min =>
+        SoundManager.blip.play()
+        copy(value = decr(value))
       case _ => this
     }
     slid

@@ -1,5 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactManager">
+    <artifact type="jar" name="simulacrum:jar">
+      <output-path>$PROJECT_DIR$/out/artifacts/simulacrum_jar</output-path>
+      <root id="archive" name="simulacrum.jar">
+        <element id="module-output" name="simulacrum" />
+        <element id="module-output" name="antiqua" />
+        <element id="module-output" name="gleany" />
+        <element id="extracted-dir" path="C:/Program Files (x86)/scala/lib/scala-library.jar" path-in-jar="/" />
+        <element id="extracted-dir" path="C:/Program Files (x86)/scala/lib/scala-reflect.jar" path-in-jar="/" />
+        <element id="extracted-dir" path="$PROJECT_DIR$/../gleany/gleany/libs/gdx-backend-lwjgl.jar" path-in-jar="/" />
+        <element id="extracted-dir" path="$PROJECT_DIR$/../gleany/gleany/libs/gdx-controllers.jar" path-in-jar="/" />
+        <element id="extracted-dir" path="$PROJECT_DIR$/../gleany/gleany/libs/gdx-freetype.jar" path-in-jar="/" />
+        <element id="extracted-dir" path="$PROJECT_DIR$/../gleany/gleany/libs/gdx-controllers-desktop.jar" path-in-jar="/" />
+        <element id="extracted-dir" path="$PROJECT_DIR$/../gleany/gleany/libs/gdx-backend-lwjgl-sources.jar" path-in-jar="/" />
+        <element id="extracted-dir" path="$PROJECT_DIR$/../gleany/gleany/libs/gdx.jar" path-in-jar="/" />
+        <element id="extracted-dir" path="$PROJECT_DIR$/../gleany/gleany/libs/gdx-backend-lwjgl-natives.jar" path-in-jar="/" />
+        <element id="extracted-dir" path="$PROJECT_DIR$/../gleany/gleany/libs/gdx-sources.jar" path-in-jar="/" />
+        <element id="extracted-dir" path="$PROJECT_DIR$/../gleany/gleany/libs/gdx-freetype-natives.jar" path-in-jar="/" />
+        <element id="extracted-dir" path="$PROJECT_DIR$/../gleany/gleany/libs/gdx-controllers-sources.jar" path-in-jar="/" />
+        <element id="extracted-dir" path="$PROJECT_DIR$/../gleany/gleany/libs/gdx-natives.jar" path-in-jar="/" />
+        <element id="extracted-dir" path="$PROJECT_DIR$/../gleany/gleany/libs/gdx-controllers-desktop-natives.jar" path-in-jar="/" />
+        <element id="extracted-dir" path="$PROJECT_DIR$/../gleany/gleany/libs/gdx-controllers-desktop-sources.jar" path-in-jar="/" />
+        <element id="extracted-dir" path="$PROJECT_DIR$/../gleany/gleany/libs/gdx-freetype-sources.jar" path-in-jar="/" />
+        <element id="extracted-dir" path="C:/Program Files (x86)/scala/lib/scala-compiler.jar" path-in-jar="/" />
+      </root>
+    </artifact>
+  </component>
   <component name="CompilerConfiguration">
     <option name="DEFAULT_COMPILER" value="Javac" />
     <resourceExtensions />
@@ -172,19 +199,20 @@
         <root url="jar://$PROJECT_DIR$/../gleany/gleany/libs/gdx-controllers.jar!/" />
         <root url="jar://$PROJECT_DIR$/../gleany/gleany/libs/gdx-freetype.jar!/" />
         <root url="jar://$PROJECT_DIR$/../gleany/gleany/libs/gdx-controllers-desktop.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../gleany/gleany/libs/gdx-backend-lwjgl-sources.jar!/" />
         <root url="jar://$PROJECT_DIR$/../gleany/gleany/libs/gdx.jar!/" />
         <root url="jar://$PROJECT_DIR$/../gleany/gleany/libs/gdx-backend-lwjgl-natives.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../gleany/gleany/libs/gdx-sources.jar!/" />
         <root url="jar://$PROJECT_DIR$/../gleany/gleany/libs/gdx-freetype-natives.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../gleany/gleany/libs/gdx-controllers-sources.jar!/" />
         <root url="jar://$PROJECT_DIR$/../gleany/gleany/libs/gdx-natives.jar!/" />
         <root url="jar://$PROJECT_DIR$/../gleany/gleany/libs/gdx-controllers-desktop-natives.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../gleany/gleany/libs/gdx-controllers-desktop-sources.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../gleany/gleany/libs/gdx-freetype-sources.jar!/" />
       </CLASSES>
       <JAVADOC />
-      <SOURCES />
+      <SOURCES>
+        <root url="jar://$PROJECT_DIR$/../gleany/gleany/libs/gdx-backend-lwjgl-sources.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../gleany/gleany/libs/gdx-freetype-sources.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../gleany/gleany/libs/gdx-controllers-desktop-sources.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../gleany/gleany/libs/gdx-controllers-sources.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../gleany/gleany/libs/gdx-sources.jar!/" />
+      </SOURCES>
     </library>
   </component>
 </project>

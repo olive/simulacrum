@@ -10,9 +10,10 @@ import scala.util.Random
 import in.dogue.simulacrum.Simulacrum
 import in.dogue.simulacrum.input.Controls
 import in.dogue.simulacrum.ui.Slider
+import in.dogue.simulacrum.audio.SoundManager
 
 object TitleMode {
-  def create(cols:Int, rows:Int, r:Random) = {
+  def create(cols:Int, rows:Int, delay:Int, r:Random) = {
     def mkTile(r:Random) = {
       val bg = Color.Grey.dim(6 + r.nextDouble)
       val fg = Color.Grey.dim(3 + r.nextDouble)
@@ -28,7 +29,7 @@ object TitleMode {
       tf.create("add:   SPACE").toTileGroup |++| ((0,3)),
       tf.create("flip: LEFT_SHIFT").toTileGroup |++| ((0,4))
     ).flatten.sfilter{ case c => c.code != CP437.` `.toCode }
-    val slider = Slider.createInt("Delay:", 1, 10)
+    val slider = Slider.createInt("Delay:", delay, 10)
     val fliptg = flip(tg)
     TitleMode(cols, rows, rect, tg |++| ((1,2)), fliptg |++| ((1, 9)), texts |++| ((10, 7)), slider, r)
   }
@@ -51,15 +52,19 @@ object TitleMode {
 
 case class TitleMode private (cols:Int, rows:Int, rect:Rect, tg:TileGroup, rtg:TileGroup, text:TileGroup, slider:Slider[Int], r:Random) {
   def update:Mode = {
+    if (!SoundManager.thing.isPlaying) {
+      SoundManager.thing.play()
+    }
     if (Controls.Space.justPressed) {
       val cd = CountMode.create(GameMode.create(cols, rows, slider.getValue, r).toMode)
+      SoundManager.thing.stop()
       Transition.create(cols, rows, this.toMode, cd.toMode, r).toMode
     } else {
       copy(slider=slider.update).toMode
     }
   }
   def draw(tr:TileRenderer):TileRenderer = {
-    tr <+< rect.draw((0,0)) <+< slider.draw((16, 13)) <|| tg <|| rtg <|| text
+    tr <+< rect.draw((0,0)) <|| tg <|| rtg <|| text <+< slider.draw((16, 13))
   }
 
   def toMode:Mode = Mode[TitleMode](_.update, _.draw, this)
